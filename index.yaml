@@ -1,0 +1,99 @@
+openapi: 3.0.1
+info:
+  title: Online Order API
+  version: 1.0.0
+  description: A basic API for working with the Swagger tools
+paths:
+  /orders:
+    summary: Get all of the orders data
+    description: >-
+      This path is used to retrieve all of the orders data from the orders.json
+      file
+    get:
+      summary: Gets the order data
+      description: Retrieve the order information from the orders.json file
+      operationId: get_orders
+      responses:
+        default:
+          description: Default error sample response
+          content:
+            application/json:
+              examples:
+                orders:
+                  value: >-
+                    {"orders":[{"name":"Carey
+                    Maynard","id":"001","state":"pending"},{"name":"Angelo
+                    Ayala","id":"002","state":"canceled"}]}
+      tags:
+        - Orders
+  /neworder:
+    summary: Create an order
+    description: This path is used to add a new order to the orders.json
+    post:
+      summary: Add a new order
+      description: Add a new order to the orders.json file
+      operationId: post_neworder
+      requestBody:
+        description: A new order object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+      responses:
+        default:
+          description: Default error sample response
+      tags:
+        - New Order
+  /update/{id}:
+    summary: Update an order
+    description: >-
+      This path is used to change the status of an order matching the provided
+      id. It modifies the state attribute of each order
+    put:
+      summary: Update the state of an order
+      description: Update the state of an order with a matching id in the orders.json file
+      operationId: update_order
+      parameters:
+        - name: id
+          in: path
+          description: 'The id of the order.'
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          description: Default error sample response
+      tags:
+        - Update Order
+  /delete/{id}:
+    summary: Delete an order
+    description: This path is used to delete an order with a matching id.
+    delete:
+      summary: Deletes an order
+      description: Delete an order with a matching id from the orders.json file.
+      operationId: ''
+      parameters:
+        - name: id
+          in: path
+          description: 'The id of the order.'
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          description: Default error sample response
+      tags:
+        - Delete Order
+components:
+  schemas:
+    Order:
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: string
+        state:
+          type: string
+      xml:
+        name: Order
